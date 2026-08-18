@@ -39,7 +39,7 @@ import { CyberConsumerSafety } from './components/civic/CyberConsumerSafety';
 
 export default function App() {
   const [currentSuite, setCurrentSuite] = useState<SuiteType>('healthcare');
-  const [healthcareTab, setHealthcareTab] = useState<HealthcareTab>('overview');
+  const [healthcareTab, setHealthcareTab] = useState<HealthcareTab>('health-locker');
   const [civicTab, setCivicTab] = useState<CivicTab>('overview');
   const [selectedCity, setSelectedCity] = useState<string>('All India (National)');
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
