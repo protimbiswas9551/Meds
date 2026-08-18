@@ -76,7 +76,7 @@ export interface HospitalRecord {
   icuBeds: { available: number; total: number };
   oxygenBeds: { available: number; total: number };
   emergencyContact: string;
-  ayushmanEm突panelled: boolean;
+  ayushmanEmpanelled: boolean;
   distance: string;
 }
 

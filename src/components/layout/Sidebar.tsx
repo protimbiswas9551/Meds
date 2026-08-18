@@ -41,107 +41,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onCloseMobile,
 }) => {
   const healthcareNavItems = [
-    {
-      id: 'overview' as HealthcareTab,
-      label: 'Healthcare Overview',
-      subtitle: 'Beds, ICU & 24x7 helpline',
-      icon: HeartPulse,
-      badge: 'Live',
-    },
-    {
-      id: 'health-locker' as HealthcareTab,
-      label: 'Digital Health Locker',
-      subtitle: 'Timeline & doctor QR share',
-      icon: FolderLock,
-      badge: 'QR Share',
-    },
-    {
-      id: 'ai-triage' as HealthcareTab,
-      label: 'AI Health Triage',
-      subtitle: 'Bilingual symptom analyzer',
-      icon: Sparkles,
-      badge: 'AI Guide',
-    },
-    {
-      id: 'jan-aushadhi' as HealthcareTab,
-      label: 'Jan Aushadhi Generics',
-      subtitle: 'Compare & save up to 85%',
-      icon: Pill,
-      badge: 'Save 85%',
-    },
-    {
-      id: 'abha' as HealthcareTab,
-      label: 'Ayushman ABHA Card',
-      subtitle: 'Health ID & linked records',
-      icon: CreditCard,
-      badge: 'ABDM',
-    },
-    {
-      id: 'opd-token' as HealthcareTab,
-      label: 'Free OPD Teleconsult',
-      subtitle: 'e-Sanjeevani queue token',
-      icon: CalendarCheck,
-      badge: 'Free',
-    },
-    {
-      id: 'blood-bank' as HealthcareTab,
-      label: 'Blood Bank Network',
-      subtitle: 'Live units availability',
-      icon: Droplet,
-      badge: '24x7',
-    },
-    {
-      id: 'immunization' as HealthcareTab,
-      label: 'National UIP Vaccine',
-      subtitle: 'Immunization schedule',
-      icon: ShieldCheck,
-      badge: 'Govt',
-    },
+    { id: 'health-locker' as HealthcareTab, label: 'Digital Health Locker', icon: FolderLock },
+    { id: 'overview' as HealthcareTab, label: 'Healthcare Overview', icon: HeartPulse },
+    { id: 'ai-triage' as HealthcareTab, label: 'AI Health Triage', icon: Sparkles },
+    { id: 'jan-aushadhi' as HealthcareTab, label: 'Jan Aushadhi Generics', icon: Pill },
+    { id: 'abha' as HealthcareTab, label: 'Ayushman ABHA Card', icon: CreditCard },
+    { id: 'opd-token' as HealthcareTab, label: 'e-Sanjeevani OPD', icon: CalendarCheck },
+    { id: 'blood-bank' as HealthcareTab, label: 'Blood Bank Network', icon: Droplet },
+    { id: 'immunization' as HealthcareTab, label: 'Immunization Schedule', icon: ShieldCheck },
   ];
 
   const civicNavItems = [
-    {
-      id: 'overview' as CivicTab,
-      label: 'Civic Overview',
-      subtitle: 'Ward status & public stats',
-      icon: Building2,
-      badge: 'Central',
-    },
-    {
-      id: 'grievance' as CivicTab,
-      label: 'Grievance Redressal',
-      subtitle: 'Potholes, water, sanitation',
-      icon: AlertCircle,
-      badge: 'CPGRAMS',
-    },
-    {
-      id: 'schemes' as CivicTab,
-      label: 'Govt Schemes Checker',
-      subtitle: 'PM-JAY, Kisan, PMAY eligibility',
-      icon: Landmark,
-      badge: 'Calculator',
-    },
-    {
-      id: 'rti' as CivicTab,
-      label: 'RTI Legal Drafter',
-      subtitle: 'Right to Information format',
-      icon: FileText,
-      badge: 'Act 2005',
-    },
-    {
-      id: 'documents' as CivicTab,
-      label: 'Citizen Documents Hub',
-      subtitle: 'DigiLocker, Ration & Aadhaar',
-      icon: FolderLock,
-      badge: 'Verified',
-    },
-    {
-      id: 'cyber-consumer' as CivicTab,
-      label: '1930 Cyber & Consumer',
-      subtitle: 'Financial fraud & complaints',
-      icon: ShieldAlert,
-      badge: 'Helpline',
-    },
+    { id: 'overview' as CivicTab, label: 'Civic Overview', icon: Building2 },
+    { id: 'grievance' as CivicTab, label: 'Grievance Redressal', icon: AlertCircle },
+    { id: 'schemes' as CivicTab, label: 'Govt Schemes Checker', icon: Landmark },
+    { id: 'rti' as CivicTab, label: 'RTI Legal Drafter', icon: FileText },
+    { id: 'documents' as CivicTab, label: 'DigiLocker Hub', icon: FolderLock },
+    { id: 'cyber-consumer' as CivicTab, label: 'Cyber & Consumer Safety', icon: ShieldAlert },
   ];
 
   const sidebarContent = (
@@ -219,36 +135,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     onSelectHealthcareTab(item.id);
                     onCloseMobile();
                   }}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left transition-colors cursor-pointer group ${
+                  className={`w-full flex items-center px-3 py-2 rounded-lg text-left transition-colors cursor-pointer group ${
                     isActive
                       ? 'bg-indigo-50 text-indigo-700 font-semibold'
                       : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
                   }`}
                 >
-                  <div className="flex items-center space-x-3 min-w-0">
+                  <div className="flex items-center space-x-2.5 min-w-0">
                     <Icon
                       className={`w-4 h-4 shrink-0 ${
                         isActive ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-600'
                       }`}
                     />
-                    <div className="min-w-0">
-                      <span className="text-xs truncate block leading-tight">{item.label}</span>
-                      <span className="text-[10px] text-slate-400 truncate block mt-0.5 leading-none">
-                        {item.subtitle}
-                      </span>
-                    </div>
+                    <span className="text-xs truncate">{item.label}</span>
                   </div>
-                  {item.badge && (
-                    <span
-                      className={`text-[10px] font-medium px-1.5 py-0.5 rounded-md shrink-0 ${
-                        isActive
-                          ? 'bg-indigo-100/80 text-indigo-800'
-                          : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
-                      }`}
-                    >
-                      {item.badge}
-                    </span>
-                  )}
                 </button>
               );
             })
@@ -262,36 +162,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     onSelectCivicTab(item.id);
                     onCloseMobile();
                   }}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left transition-colors cursor-pointer group ${
+                  className={`w-full flex items-center px-3 py-2 rounded-lg text-left transition-colors cursor-pointer group ${
                     isActive
                       ? 'bg-indigo-50 text-indigo-700 font-semibold'
                       : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
                   }`}
                 >
-                  <div className="flex items-center space-x-3 min-w-0">
+                  <div className="flex items-center space-x-2.5 min-w-0">
                     <Icon
                       className={`w-4 h-4 shrink-0 ${
                         isActive ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-600'
                       }`}
                     />
-                    <div className="min-w-0">
-                      <span className="text-xs truncate block leading-tight">{item.label}</span>
-                      <span className="text-[10px] text-slate-400 truncate block mt-0.5 leading-none">
-                        {item.subtitle}
-                      </span>
-                    </div>
+                    <span className="text-xs truncate">{item.label}</span>
                   </div>
-                  {item.badge && (
-                    <span
-                      className={`text-[10px] font-medium px-1.5 py-0.5 rounded-md shrink-0 ${
-                        isActive
-                          ? 'bg-indigo-100/80 text-indigo-800'
-                          : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
-                      }`}
-                    >
-                      {item.badge}
-                    </span>
-                  )}
                 </button>
               );
             })}

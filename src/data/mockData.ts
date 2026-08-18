@@ -330,7 +330,7 @@ export const HOSPITALS_DATA: HospitalRecord[] = [
     icuBeds: { available: 12, total: 320 },
     oxygenBeds: { available: 94, total: 1100 },
     emergencyContact: '011-26588500',
-    ayushmanEm突panelled: true,
+    ayushmanEmpanelled: true,
     distance: '4.2 km',
   },
   {
@@ -343,7 +343,7 @@ export const HOSPITALS_DATA: HospitalRecord[] = [
     icuBeds: { available: 18, total: 180 },
     oxygenBeds: { available: 140, total: 850 },
     emergencyContact: '011-26165060',
-    ayushmanEm突panelled: true,
+    ayushmanEmpanelled: true,
     distance: '4.8 km',
   },
   {
@@ -356,7 +356,7 @@ export const HOSPITALS_DATA: HospitalRecord[] = [
     icuBeds: { available: 14, total: 210 },
     oxygenBeds: { available: 110, total: 920 },
     emergencyContact: '022-24107000',
-    ayushmanEm突panelled: true,
+    ayushmanEmpanelled: true,
     distance: '3.1 km',
   },
   {
@@ -369,7 +369,7 @@ export const HOSPITALS_DATA: HospitalRecord[] = [
     icuBeds: { available: 22, total: 140 },
     oxygenBeds: { available: 180, total: 600 },
     emergencyContact: '080-26701150',
-    ayushmanEm突panelled: true,
+    ayushmanEmpanelled: true,
     distance: '5.5 km',
   },
   {
@@ -382,7 +382,7 @@ export const HOSPITALS_DATA: HospitalRecord[] = [
     icuBeds: { available: 19, total: 160 },
     oxygenBeds: { available: 130, total: 750 },
     emergencyContact: '040-27505566',
-    ayushmanEm突panelled: true,
+    ayushmanEmpanelled: true,
     distance: '6.2 km',
   },
   {
@@ -395,7 +395,7 @@ export const HOSPITALS_DATA: HospitalRecord[] = [
     icuBeds: { available: 16, total: 195 },
     oxygenBeds: { available: 125, total: 800 },
     emergencyContact: '033-22231589',
-    ayushmanEm突panelled: true,
+    ayushmanEmpanelled: true,
     distance: '2.8 km',
   },
 ];

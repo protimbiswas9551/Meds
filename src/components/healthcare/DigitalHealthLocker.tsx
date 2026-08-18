@@ -15,17 +15,10 @@ import {
   X,
   Share2,
   Calendar,
-  Building,
-  Sparkles,
-  FileSpreadsheet,
+  Building2,
   CheckCircle2,
-  AlertCircle,
   RefreshCw,
   Search,
-  FileUp,
-  FileCheck2,
-  FileBox,
-  Key,
 } from 'lucide-react';
 import { HealthLockerRecord } from '../../types';
 
@@ -36,8 +29,8 @@ export const DigitalHealthLocker: React.FC = () => {
       name: 'Blood Test Report (Lipid Profile & CBC)',
       category: 'Lab Report',
       date: '2025-05-14',
-      hospitalOrLab: 'Dr. Lal PathLabs & Civil Hospital Delhi',
-      fileName: 'Blood_Test_Lipid_CBC_May2025.pdf',
+      hospitalOrLab: 'Dr. Lal PathLabs & Civil Hospital',
+      fileName: 'Blood_Test_Lipid_CBC.pdf',
       fileSize: '1.8 MB',
       fileType: 'pdf',
       doctorNotes: 'Fasting glucose: 94 mg/dL, Total cholesterol: 182 mg/dL. Normal limits.',
@@ -45,11 +38,11 @@ export const DigitalHealthLocker: React.FC = () => {
     },
     {
       id: 'hl-002',
-      name: 'Cardiology ECG & Holter Monitor Summary',
+      name: 'Cardiology ECG & Holter Summary',
       category: 'Scan & X-Ray',
       date: '2025-04-20',
-      hospitalOrLab: 'AIIMS New Delhi - Cardiology Dept',
-      fileName: 'AIIMS_Cardio_ECG_Lead12.pdf',
+      hospitalOrLab: 'AIIMS New Delhi - Cardiology',
+      fileName: 'AIIMS_Cardio_ECG.pdf',
       fileSize: '3.4 MB',
       fileType: 'pdf',
       doctorNotes: 'Normal sinus rhythm, HR 72 bpm. No ST-T segment deviation.',
@@ -57,11 +50,11 @@ export const DigitalHealthLocker: React.FC = () => {
     },
     {
       id: 'hl-003',
-      name: 'General Medicine OPD Prescription',
+      name: 'OPD Prescription - General Medicine',
       category: 'Prescription',
       date: '2025-03-10',
-      hospitalOrLab: 'e-Sanjeevani National Telemedicine',
-      fileName: 'eSanjeevani_Rx_DrSharma.pdf',
+      hospitalOrLab: 'e-Sanjeevani Telemedicine',
+      fileName: 'eSanjeevani_Rx.pdf',
       fileSize: '840 KB',
       fileType: 'pdf',
       doctorNotes: 'Tab. Paracetamol 650mg SOS, Tab. Cetirizine 10mg OD x 5 days.',
@@ -69,37 +62,37 @@ export const DigitalHealthLocker: React.FC = () => {
     },
     {
       id: 'hl-004',
-      name: 'Covid-19 Booster & Tetanus Certificate',
+      name: 'Vaccination Certificate (Tetanus & Booster)',
       category: 'Vaccine Certificate',
       date: '2024-11-18',
-      hospitalOrLab: 'Govt Urban Primary Health Centre (UPHC)',
-      fileName: 'CoWIN_Universal_Vaccination_Pass.pdf',
+      hospitalOrLab: 'Urban Primary Health Centre',
+      fileName: 'Vaccination_Pass.pdf',
       fileSize: '620 KB',
       fileType: 'pdf',
-      doctorNotes: 'Batch #COV-8491. Fully immunized under National UIP.',
+      doctorNotes: 'Batch #COV-8491. Fully immunized under UIP.',
       isAbdmLinked: true,
     },
   ]);
 
-  // Form input states
+  // Form states
   const [docName, setDocName] = useState('');
   const [category, setCategory] = useState<HealthLockerRecord['category']>('Lab Report');
-  const [hospitalOrLab, setHospitalOrLab] = useState('Govt Civil Hospital & PathLab');
+  const [hospitalOrLab, setHospitalOrLab] = useState('AIIMS / Civil Hospital');
   const [docDate, setDocDate] = useState(new Date().toISOString().split('T')[0]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [mockFileName, setMockFileName] = useState('Blood_Test_Report_2025.pdf');
   const [doctorNotes, setDoctorNotes] = useState('');
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadSuccessToast, setUploadSuccessToast] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
   // Search & Filter
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('All');
 
-  // QR Code Sharing Modal States
+  // QR Modal
   const [showQrModal, setShowQrModal] = useState(false);
-  const [qrExpirySeconds, setQrExpirySeconds] = useState(900); // 15 minutes
+  const [qrExpirySeconds, setQrExpirySeconds] = useState(900);
   const [accessPin, setAccessPin] = useState('4829');
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedPin, setCopiedPin] = useState(false);
@@ -109,7 +102,7 @@ export const DigitalHealthLocker: React.FC = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Countdown timer for QR code
+  // Timer effect
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (showQrModal && qrExpirySeconds > 0) {
@@ -156,19 +149,6 @@ export const DigitalHealthLocker: React.FC = () => {
     }
   };
 
-  const handleSelectPreset = (
-    presetName: string,
-    presetCat: HealthLockerRecord['category'],
-    presetLab: string,
-    sampleFileName: string
-  ) => {
-    setDocName(presetName);
-    setCategory(presetCat);
-    setHospitalOrLab(presetLab);
-    setMockFileName(sampleFileName);
-    setSelectedFile(null);
-  };
-
   const handleAddRecord = (e: React.FormEvent) => {
     e.preventDefault();
     if (!docName.trim()) return;
@@ -179,37 +159,37 @@ export const DigitalHealthLocker: React.FC = () => {
       const finalFileName =
         selectedFile?.name ||
         mockFileName.trim() ||
-        `${docName.replace(/\s+/g, '_')}_${new Date().getFullYear()}.pdf`;
+        `${docName.replace(/\s+/g, '_')}_2025.pdf`;
 
       const finalFileSize = selectedFile
         ? `${(selectedFile.size / (1024 * 1024)).toFixed(1)} MB`
-        : '1.6 MB';
+        : '1.5 MB';
 
       const newRecord: HealthLockerRecord = {
         id: `hl-${Date.now().toString().slice(-4)}`,
         name: docName.trim(),
         category,
         date: docDate || new Date().toISOString().split('T')[0],
-        hospitalOrLab: hospitalOrLab.trim() || 'AIIMS / Govt Healthcare Network',
+        hospitalOrLab: hospitalOrLab.trim() || 'AIIMS / Civil Hospital',
         fileName: finalFileName,
         fileSize: finalFileSize,
-        fileType: finalFileName.endsWith('.jpg') || finalFileName.endsWith('.png') ? 'image' : 'pdf',
+        fileType: 'pdf',
         doctorNotes: doctorNotes.trim() || undefined,
         isAbdmLinked: true,
       };
 
       setRecords([newRecord, ...records]);
       setIsUploading(false);
-      setUploadSuccessToast(`"${newRecord.name}" successfully added to Health Locker timeline!`);
+      setToastMessage(`"${newRecord.name}" added to timeline`);
 
-      // Reset form fields
+      // Reset
       setDocName('');
       setSelectedFile(null);
       setMockFileName('Blood_Test_Report_2025.pdf');
       setDoctorNotes('');
 
-      setTimeout(() => setUploadSuccessToast(null), 4000);
-    }, 500);
+      setTimeout(() => setToastMessage(null), 3000);
+    }, 400);
   };
 
   const handleDelete = (id: string) => {
@@ -228,18 +208,16 @@ export const DigitalHealthLocker: React.FC = () => {
     setTimeout(() => setCopiedPin(false), 2000);
   };
 
-  // Filtered records
   const filteredRecords = records.filter((r) => {
     const matchesSearch =
       r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      r.hospitalOrLab.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      r.category.toLowerCase().includes(searchQuery.toLowerCase());
+      r.hospitalOrLab.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory =
       selectedCategoryFilter === 'All' || r.category === selectedCategoryFilter;
     return matchesSearch && matchesCategory;
   });
 
-  const categoriesList: Array<HealthLockerRecord['category']> = [
+  const categories: Array<HealthLockerRecord['category']> = [
     'Lab Report',
     'Prescription',
     'Discharge Summary',
@@ -250,152 +228,112 @@ export const DigitalHealthLocker: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Top Hero Banner */}
-      <div className="bg-white rounded-xl p-6 sm:p-7 border border-slate-200 shadow-xs relative overflow-hidden">
-        <div className="max-w-3xl">
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <span className="bg-indigo-50 text-indigo-700 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-indigo-100 flex items-center gap-1">
-              <FolderLock className="w-3.5 h-3.5 text-indigo-600" />
-              Ayushman Bharat Digital Health Locker (ABDM)
-            </span>
-            <span className="text-xs text-slate-500">256-Bit Encrypted Citizen Records</span>
+      {/* Hero Header */}
+      <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <FolderLock className="w-5 h-5 text-indigo-600" />
+            <h1 className="text-xl font-bold text-slate-900">Digital Health Locker</h1>
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 mb-2">
-            Digital Health Locker & Temporary Doctor QR Sharing
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
-            Type a document name (e.g. <em>&quot;Blood Test Report&quot;</em>) and upload or select files to build your
-            secure medical history timeline. Generate time-limited QR codes to share your records with doctors in OPD or emergency wards.
+          <p className="text-xs text-slate-600">
+            Upload medical documents and generate time-limited QR passes for doctor consultations.
           </p>
+        </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              onClick={handleOpenQrModal}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg text-xs sm:text-sm transition-colors shadow-xs flex items-center gap-2 cursor-pointer"
-            >
-              <QrCode className="w-4 h-4" />
-              <span>Generate Doctor Share QR Code</span>
-            </button>
-            <div className="text-xs text-slate-500 flex items-center gap-1.5 bg-slate-50 px-3 py-2 rounded-lg border border-slate-200">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>Linked to ABHA: <strong>91-4820-1948-2830</strong></span>
-            </div>
+        <div className="flex items-center gap-3">
+          <div className="text-xs text-slate-600 flex items-center gap-1.5 bg-slate-50 px-3 py-2 rounded-lg border border-slate-200">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>ABHA: <strong>91-4820-1948-2830</strong></span>
           </div>
+          <button
+            onClick={handleOpenQrModal}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+          >
+            <QrCode className="w-4 h-4" />
+            <span>Doctor QR Pass</span>
+          </button>
         </div>
       </div>
 
-      {/* Success Notification Toast */}
-      {uploadSuccessToast && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs flex items-center justify-between gap-3 shadow-xs">
+      {/* Toast */}
+      {toastMessage && (
+        <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg text-xs flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span className="font-medium">{uploadSuccessToast}</span>
+            <span>{toastMessage}</span>
           </div>
-          <button
-            onClick={() => setUploadSuccessToast(null)}
-            className="text-emerald-700 hover:text-emerald-900 cursor-pointer"
-          >
-            <X className="w-4 h-4" />
+          <button onClick={() => setToastMessage(null)} className="text-emerald-700 hover:text-emerald-900 cursor-pointer">
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
       )}
 
-      {/* 2-Column Main Workspace: (Left: Inline Upload Form | Right: Direct Timeline) */}
+      {/* 2-Column Clean Workspace */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Interactive Upload Form */}
-        <div className="lg:col-span-5 bg-white rounded-xl border border-slate-200 shadow-xs p-5 sm:p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div className="flex items-center gap-2">
-              <FileUp className="w-4 h-4 text-indigo-600" />
-              <h2 className="text-sm font-bold text-slate-900">Upload Health Document</h2>
-            </div>
-            <span className="text-[10px] bg-indigo-50 text-indigo-700 font-semibold px-2 py-0.5 rounded border border-indigo-100">
-              Instant Encrypt
-            </span>
+        {/* Upload Form */}
+        <div className="lg:col-span-5 bg-white rounded-xl border border-slate-200 shadow-xs p-5 space-y-4">
+          <div className="border-b border-slate-100 pb-3">
+            <h2 className="text-sm font-bold text-slate-900">Upload Document</h2>
+            <p className="text-xs text-slate-500 mt-0.5">Add a new health record to your timeline</p>
           </div>
 
-          <form onSubmit={handleAddRecord} className="space-y-4">
-            {/* Document Title Input */}
+          <form onSubmit={handleAddRecord} className="space-y-3.5">
+            {/* Title */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Document Name / Title *
+                Document Title
               </label>
               <input
                 type="text"
                 required
                 value={docName}
                 onChange={(e) => setDocName(e.target.value)}
-                placeholder="e.g. Blood Test Report (Lipid & CBC)"
-                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-hidden focus:bg-white focus:border-indigo-600 font-medium"
+                placeholder="e.g. Blood Test Report (Lipid Profile)"
+                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-hidden focus:bg-white focus:border-indigo-600"
               />
             </div>
 
-            {/* Quick Mock Presets */}
-            <div>
-              <span className="block text-[10px] font-medium text-slate-400 mb-1.5">
-                Quick Document Name Presets:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleSelectPreset(
-                      'Blood Test Report (Lipid & CBC)',
-                      'Lab Report',
-                      'Dr. Lal PathLabs / AIIMS',
-                      'Blood_Test_Report_May2025.pdf'
-                    )
-                  }
-                  className="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded cursor-pointer transition-colors"
-                >
-                  🧪 Blood Test Report
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleSelectPreset(
-                      'OPD Prescription (General Medicine)',
-                      'Prescription',
-                      'e-Sanjeevani Teleconsultation',
-                      'eSanjeevani_Rx_May2025.pdf'
-                    )
-                  }
-                  className="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded cursor-pointer transition-colors"
-                >
-                  💊 OPD Prescription
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleSelectPreset(
-                      'Chest X-Ray Digital PA Scan',
-                      'Scan & X-Ray',
-                      'Civil Hospital Radiology Dept',
-                      'Chest_XRay_PA_Scan.pdf'
-                    )
-                  }
-                  className="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded cursor-pointer transition-colors"
-                >
-                  🩻 Chest X-Ray
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleSelectPreset(
-                      'Hospital Discharge Summary',
-                      'Discharge Summary',
-                      'AIIMS New Delhi Internal Medicine',
-                      'AIIMS_Discharge_Summary.pdf'
-                    )
-                  }
-                  className="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded cursor-pointer transition-colors"
-                >
-                  📋 Discharge Summary
-                </button>
-              </div>
+            {/* Presets */}
+            <div className="flex flex-wrap gap-1.5">
+              <button
+                type="button"
+                onClick={() => {
+                  setDocName('Blood Test Report (Lipid Profile)');
+                  setCategory('Lab Report');
+                  setHospitalOrLab('Dr. Lal PathLabs');
+                  setMockFileName('Blood_Test_Report.pdf');
+                }}
+                className="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded cursor-pointer transition-colors"
+              >
+                + Blood Test
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setDocName('OPD Prescription');
+                  setCategory('Prescription');
+                  setHospitalOrLab('e-Sanjeevani');
+                  setMockFileName('Prescription_OPD.pdf');
+                }}
+                className="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded cursor-pointer transition-colors"
+              >
+                + Prescription
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setDocName('Chest X-Ray Scan');
+                  setCategory('Scan & X-Ray');
+                  setHospitalOrLab('Civil Hospital');
+                  setMockFileName('Chest_XRay.pdf');
+                }}
+                className="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded cursor-pointer transition-colors"
+              >
+                + X-Ray Scan
+              </button>
             </div>
 
-            {/* Category & Date Grid */}
+            {/* Category & Date */}
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
@@ -406,17 +344,16 @@ export const DigitalHealthLocker: React.FC = () => {
                   onChange={(e) => setCategory(e.target.value as any)}
                   className="w-full px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-hidden focus:bg-white focus:border-indigo-600"
                 >
-                  {categoriesList.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
+                  {categories.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
                     </option>
                   ))}
                 </select>
               </div>
-
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Record Date
+                  Date
                 </label>
                 <input
                   type="date"
@@ -427,25 +364,22 @@ export const DigitalHealthLocker: React.FC = () => {
               </div>
             </div>
 
-            {/* Hospital / Clinic */}
+            {/* Provider */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Hospital / Diagnostic Centre / Lab
+                Hospital / Diagnostic Centre
               </label>
               <input
                 type="text"
                 value={hospitalOrLab}
                 onChange={(e) => setHospitalOrLab(e.target.value)}
-                placeholder="e.g. AIIMS New Delhi, Civil Hospital, SRL Diagnostics"
+                placeholder="e.g. AIIMS New Delhi"
                 className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-hidden focus:bg-white focus:border-indigo-600"
               />
             </div>
 
-            {/* File Upload Drop Area */}
+            {/* File Drop */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Attach File (PDF, Image, Scan)
-              </label>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -453,7 +387,6 @@ export const DigitalHealthLocker: React.FC = () => {
                 onChange={handleFileChange}
                 className="hidden"
               />
-
               <div
                 onDragOver={(e) => {
                   e.preventDefault();
@@ -462,45 +395,39 @@ export const DigitalHealthLocker: React.FC = () => {
                 onDragLeave={() => setIsDragging(false)}
                 onDrop={handleFileDrop}
                 onClick={() => fileInputRef.current?.click()}
-                className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-colors ${
+                className={`border border-dashed rounded-lg p-3 text-center cursor-pointer transition-colors ${
                   isDragging
                     ? 'border-indigo-600 bg-indigo-50/50'
-                    : 'border-slate-300 hover:border-indigo-400 bg-slate-50/50'
+                    : 'border-slate-300 hover:border-slate-400 bg-slate-50/50'
                 }`}
               >
-                <Upload className="w-5 h-5 text-indigo-600 mx-auto mb-1" />
-                <p className="text-xs font-semibold text-slate-800">
-                  {selectedFile
-                    ? `Selected: ${selectedFile.name} (${(selectedFile.size / 1024).toFixed(0)} KB)`
-                    : mockFileName
-                    ? `Selected Preset: ${mockFileName}`
-                    : 'Click or drop PDF/JPG here'}
+                <Upload className="w-4 h-4 text-slate-400 mx-auto mb-1" />
+                <p className="text-xs font-medium text-slate-700">
+                  {selectedFile ? selectedFile.name : mockFileName || 'Select or drop file'}
                 </p>
-                <span className="text-[10px] text-slate-400 block mt-0.5">
-                  Click to browse computer files or use preset PDF
-                </span>
+                <span className="text-[10px] text-slate-400">PDF, PNG, or JPG up to 10MB</span>
               </div>
             </div>
 
-            {/* Optional Doctor Notes */}
+            {/* Doctor Remark */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Doctor Notes / Key Remarks (Optional)
+                Doctor Notes (Optional)
               </label>
               <textarea
                 rows={2}
                 value={doctorNotes}
                 onChange={(e) => setDoctorNotes(e.target.value)}
-                placeholder="e.g. Fasting Sugar 94 mg/dL, Hemoglobin 14.2 g/dL..."
+                placeholder="e.g. Fasting sugar: 94 mg/dL, normal..."
                 className="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-hidden focus:bg-white focus:border-indigo-600 resize-none"
               />
             </div>
 
-            {/* Submit Button */}
+            {/* Submit */}
             <button
               type="submit"
               disabled={isUploading || !docName.trim()}
-              className={`w-full py-2.5 px-4 text-xs font-semibold text-white rounded-lg transition-colors shadow-xs flex items-center justify-center gap-2 cursor-pointer ${
+              className={`w-full py-2 px-4 text-xs font-semibold text-white rounded-lg transition-colors shadow-xs flex items-center justify-center gap-1.5 cursor-pointer ${
                 isUploading || !docName.trim()
                   ? 'bg-indigo-400 cursor-not-allowed'
                   : 'bg-indigo-600 hover:bg-indigo-700'
@@ -508,28 +435,28 @@ export const DigitalHealthLocker: React.FC = () => {
             >
               {isUploading ? (
                 <>
-                  <RefreshCw className="w-4 h-4 animate-spin" />
-                  <span>Encrypting & Adding to Timeline...</span>
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                  <span>Adding Document...</span>
                 </>
               ) : (
                 <>
-                  <Plus className="w-4 h-4" />
-                  <span>Add Document to Health Timeline</span>
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Document</span>
                 </>
               )}
             </button>
           </form>
         </div>
 
-        {/* Right Column: Clean Medical History Timeline View */}
+        {/* Timeline */}
         <div className="lg:col-span-7 space-y-4">
-          {/* Search & Category Filter Bar */}
-          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          {/* Search & Filter */}
+          <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search timeline documents..."
+                placeholder="Search documents..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-hidden focus:bg-white focus:border-indigo-600"
@@ -553,109 +480,76 @@ export const DigitalHealthLocker: React.FC = () => {
             </div>
           </div>
 
-          {/* Timeline Container */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-5 sm:p-6">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-5">
+          {/* Timeline List */}
+          <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-5">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-indigo-600" />
-                <h2 className="text-sm font-bold text-slate-900">Medical Records Timeline</h2>
-                <span className="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full">
-                  {filteredRecords.length} Files
-                </span>
+                <h2 className="text-sm font-bold text-slate-900">Medical Timeline</h2>
               </div>
-
-              <button
-                onClick={handleOpenQrModal}
-                className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 cursor-pointer bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100"
-              >
-                <QrCode className="w-3.5 h-3.5" />
-                <span>Doctor QR Pass</span>
-              </button>
+              <span className="text-xs text-slate-500">{filteredRecords.length} Records</span>
             </div>
 
             {filteredRecords.length === 0 ? (
-              <div className="p-8 text-center text-slate-500 text-xs">
-                No documents found matching your filter. Use the form on the left to add a record.
+              <div className="py-8 text-center text-slate-400 text-xs">
+                No documents found. Use the form on the left to add your records.
               </div>
             ) : (
-              <div className="relative pl-6 sm:pl-7 space-y-5 before:absolute before:left-2.5 sm:before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
+              <div className="relative pl-6 space-y-4 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-slate-200">
                 {filteredRecords.map((record) => (
-                  <div key={record.id} className="relative group">
-                    {/* Timeline Dot */}
-                    <div className="absolute -left-6 sm:-left-7 top-1.5 w-4 h-4 rounded-full bg-white border-2 border-indigo-600 flex items-center justify-center shadow-xs">
+                  <div key={record.id} className="relative">
+                    {/* Dot */}
+                    <div className="absolute -left-6 top-2 w-4 h-4 rounded-full bg-white border border-indigo-600 flex items-center justify-center">
                       <div className="w-1.5 h-1.5 rounded-full bg-indigo-600" />
                     </div>
 
-                    {/* Timeline Item Card */}
-                    <div className="bg-slate-50/70 hover:bg-slate-50 border border-slate-200 rounded-xl p-4 transition-colors">
-                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                    {/* Card */}
+                    <div className="bg-slate-50/70 hover:bg-slate-50 border border-slate-200 rounded-lg p-3.5 transition-colors">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
                         <div className="space-y-1 flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-[10px] font-semibold uppercase tracking-wider bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded border border-indigo-100">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-medium uppercase tracking-wider bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded">
                               {record.category}
                             </span>
                             <span className="text-[11px] text-slate-400 flex items-center gap-1">
                               <Calendar className="w-3 h-3 text-slate-400" />
                               {record.date}
                             </span>
-                            {record.isAbdmLinked && (
-                              <span className="text-[10px] bg-emerald-50 text-emerald-700 font-medium px-2 py-0.5 rounded border border-emerald-100 flex items-center gap-1">
-                                <ShieldCheck className="w-3 h-3 text-emerald-600" /> ABDM
-                              </span>
-                            )}
                           </div>
 
-                          <h3 className="text-sm font-bold text-slate-900">{record.name}</h3>
+                          <h3 className="text-xs font-bold text-slate-900">{record.name}</h3>
 
-                          <div className="flex items-center gap-2 text-xs text-slate-500">
-                            <Building className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                          <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                            <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                             <span className="truncate">{record.hospitalOrLab}</span>
                           </div>
 
                           {record.doctorNotes && (
-                            <p className="text-xs text-slate-600 bg-white p-2 rounded-md border border-slate-200/80 leading-relaxed mt-1.5">
-                              <strong className="text-slate-700 font-medium">Notes: </strong>
+                            <p className="text-xs text-slate-600 bg-white p-2 rounded border border-slate-200 mt-1.5">
                               {record.doctorNotes}
                             </p>
                           )}
 
-                          {/* File info pill */}
-                          <div className="pt-1">
-                            <div className="inline-flex items-center gap-1.5 bg-white border border-slate-200 px-2.5 py-1 rounded text-xs text-slate-700">
-                              <FileText className="w-3.5 h-3.5 text-indigo-600" />
-                              <span className="font-mono text-[11px] font-medium truncate max-w-[200px]">
-                                {record.fileName}
-                              </span>
-                              <span className="text-[10px] text-slate-400">({record.fileSize})</span>
-                            </div>
+                          <div className="pt-1 flex items-center gap-1.5 text-[11px] text-slate-500">
+                            <FileText className="w-3.5 h-3.5 text-slate-400" />
+                            <span className="font-mono">{record.fileName}</span>
+                            <span>({record.fileSize})</span>
                           </div>
                         </div>
 
                         {/* Actions */}
-                        <div className="flex items-center gap-1.5 shrink-0 pt-2 sm:pt-0">
+                        <div className="flex items-center gap-1 shrink-0 pt-2 sm:pt-0">
                           <button
                             onClick={() => setPreviewRecord(record)}
-                            className="p-1.5 text-slate-600 hover:text-indigo-600 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-medium transition-colors flex items-center gap-1 cursor-pointer shadow-xs"
-                            title="Preview Document"
+                            className="px-2.5 py-1 text-slate-600 hover:text-indigo-600 bg-white hover:bg-slate-100 border border-slate-200 rounded text-xs font-medium transition-colors flex items-center gap-1 cursor-pointer"
                           >
                             <Eye className="w-3.5 h-3.5" />
-                            <span className="text-xs">Preview</span>
+                            <span>View</span>
                           </button>
-
-                          <button
-                            onClick={() => {
-                              alert(`Downloading verified copy of "${record.fileName}" from ABDM repository.`);
-                            }}
-                            className="p-1.5 text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-medium transition-colors flex items-center gap-1 cursor-pointer shadow-xs"
-                            title="Download Document"
-                          >
-                            <Download className="w-3.5 h-3.5" />
-                          </button>
-
                           <button
                             onClick={() => handleDelete(record.id)}
-                            className="p-1.5 text-slate-400 hover:text-rose-600 bg-white hover:bg-rose-50 border border-slate-200 rounded-lg text-xs transition-colors cursor-pointer shadow-xs"
-                            title="Delete Record"
+                            className="p-1.5 text-slate-400 hover:text-rose-600 bg-white hover:bg-rose-50 border border-slate-200 rounded text-xs transition-colors cursor-pointer"
+                            title="Delete"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -670,49 +564,38 @@ export const DigitalHealthLocker: React.FC = () => {
         </div>
       </div>
 
-      {/* Temporary Doctor QR Code Modal */}
+      {/* QR Code Modal */}
       {showQrModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
-          <div className="bg-white rounded-xl border border-slate-200 shadow-xl max-w-md w-full p-5 sm:p-6 overflow-y-auto max-h-[90vh]">
+          <div className="bg-white rounded-xl border border-slate-200 shadow-xl max-w-sm w-full p-5">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
               <div className="flex items-center gap-2">
                 <QrCode className="w-4 h-4 text-indigo-600" />
-                <h3 className="text-sm font-bold text-slate-900">Doctor Quick-Scan QR Pass</h3>
+                <h3 className="text-sm font-bold text-slate-900">Doctor QR Pass</h3>
               </div>
               <button
                 onClick={() => setShowQrModal(false)}
-                className="p-1 text-slate-400 hover:text-slate-600 rounded-md cursor-pointer"
+                className="p-1 text-slate-400 hover:text-slate-600 rounded cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="text-center space-y-4">
-              {/* Expiry Timer Pill */}
-              <div className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full text-xs text-amber-800 font-semibold">
+              <div className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full text-xs text-amber-800 font-medium">
                 <Clock className="w-3.5 h-3.5 text-amber-600" />
-                <span>
-                  {qrExpirySeconds > 0 ? (
-                    `Passcode expires in: ${formatTimer(qrExpirySeconds)}`
-                  ) : (
-                    <span className="text-rose-600">Expired — Regenerate QR</span>
-                  )}
-                </span>
+                <span>Expires in: {formatTimer(qrExpirySeconds)}</span>
               </div>
 
-              {/* Mock Clean SVG QR Code */}
-              <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl inline-block shadow-xs">
-                <svg
-                  className="w-44 h-44 mx-auto text-slate-900"
-                  viewBox="0 0 100 100"
-                  fill="currentColor"
-                >
-                  <rect x="5" y="5" width="28" height="28" rx="4" fill="none" stroke="currentColor" strokeWidth="6" />
-                  <rect x="13" y="13" width="12" height="12" rx="2" fill="currentColor" />
-                  <rect x="67" y="5" width="28" height="28" rx="4" fill="none" stroke="currentColor" strokeWidth="6" />
-                  <rect x="75" y="13" width="12" height="12" rx="2" fill="currentColor" />
-                  <rect x="5" y="67" width="28" height="28" rx="4" fill="none" stroke="currentColor" strokeWidth="6" />
-                  <rect x="13" y="75" width="12" height="12" rx="2" fill="currentColor" />
+              {/* Minimal SVG QR */}
+              <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg inline-block">
+                <svg className="w-40 h-40 mx-auto text-slate-900" viewBox="0 0 100 100" fill="currentColor">
+                  <rect x="6" y="6" width="26" height="26" rx="3" fill="none" stroke="currentColor" strokeWidth="5" />
+                  <rect x="13" y="13" width="12" height="12" rx="1" fill="currentColor" />
+                  <rect x="68" y="6" width="26" height="26" rx="3" fill="none" stroke="currentColor" strokeWidth="5" />
+                  <rect x="75" y="13" width="12" height="12" rx="1" fill="currentColor" />
+                  <rect x="6" y="68" width="26" height="26" rx="3" fill="none" stroke="currentColor" strokeWidth="5" />
+                  <rect x="13" y="75" width="12" height="12" rx="1" fill="currentColor" />
                   <rect x="38" y="10" width="8" height="8" rx="1" />
                   <rect x="50" y="10" width="8" height="8" rx="1" />
                   <rect x="38" y="24" width="8" height="8" rx="1" />
@@ -738,53 +621,39 @@ export const DigitalHealthLocker: React.FC = () => {
                   <rect x="66" y="80" width="8" height="8" rx="1" />
                   <rect x="80" y="80" width="8" height="8" rx="1" />
                 </svg>
-                <div className="mt-2 text-[10px] text-slate-500 font-mono">
-                  ABDM Consent Token #CA-2025-8841
-                </div>
               </div>
 
-              {/* 4-digit Security PIN Display */}
-              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 flex items-center justify-between">
+              {/* PIN Box */}
+              <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex items-center justify-between">
                 <div className="text-left">
-                  <span className="text-[10px] text-slate-500 uppercase font-semibold block">
-                    Doctor Verbal Security PIN
-                  </span>
-                  <span className="font-mono text-base font-bold text-slate-900 tracking-widest">
-                    {accessPin}
-                  </span>
+                  <span className="text-[10px] text-slate-500 uppercase font-semibold block">Doctor Security PIN</span>
+                  <span className="font-mono text-base font-bold text-slate-900 tracking-wider">{accessPin}</span>
                 </div>
                 <button
                   onClick={handleCopyPin}
                   className="px-2.5 py-1 text-xs font-medium text-indigo-700 bg-white border border-indigo-200 rounded hover:bg-indigo-50 transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   {copiedPin ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                  <span>{copiedPin ? 'Copied' : 'Copy PIN'}</span>
+                  <span>{copiedPin ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>
 
-              <p className="text-xs text-slate-500 leading-relaxed text-left">
-                Show this QR code to your doctor. The physician scans it with their hospital management system
-                to instantly view your selected health records for this consultation session only.
-              </p>
-
-              {/* Actions */}
-              <div className="flex items-center gap-2 pt-2">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => {
                     setQrExpirySeconds(900);
                     setAccessPin(Math.floor(1000 + Math.random() * 9000).toString());
                   }}
-                  className="flex-1 py-2 px-3 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="flex-1 py-2 px-3 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-medium transition-colors cursor-pointer"
                 >
-                  <RefreshCw className="w-3.5 h-3.5" />
-                  <span>Regenerate PIN</span>
+                  Regenerate
                 </button>
                 <button
                   onClick={handleCopyLink}
-                  className="flex-1 py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                  className="flex-1 py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1 cursor-pointer shadow-xs"
                 >
                   {copiedLink ? <Check className="w-3.5 h-3.5" /> : <Share2 className="w-3.5 h-3.5" />}
-                  <span>{copiedLink ? 'Link Copied' : 'Copy Share Link'}</span>
+                  <span>{copiedLink ? 'Copied' : 'Share Link'}</span>
                 </button>
               </div>
             </div>
@@ -792,92 +661,63 @@ export const DigitalHealthLocker: React.FC = () => {
         </div>
       )}
 
-      {/* Document Preview Modal */}
+      {/* Preview Modal */}
       {previewRecord && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
-          <div className="bg-white rounded-xl border border-slate-200 shadow-xl max-w-xl w-full p-5 sm:p-6 overflow-y-auto max-h-[90vh]">
+          <div className="bg-white rounded-xl border border-slate-200 shadow-xl max-w-md w-full p-5">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
               <div className="flex items-center gap-2 min-w-0">
                 <FileText className="w-4 h-4 text-indigo-600 shrink-0" />
-                <h3 className="text-sm font-bold text-slate-900 truncate">
-                  {previewRecord.name}
-                </h3>
+                <h3 className="text-sm font-bold text-slate-900 truncate">{previewRecord.name}</h3>
               </div>
               <button
                 onClick={() => setPreviewRecord(null)}
-                className="p-1 text-slate-400 hover:text-slate-600 rounded-md cursor-pointer shrink-0"
+                className="p-1 text-slate-400 hover:text-slate-600 rounded cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-2 text-xs bg-slate-50 p-3 rounded-lg border border-slate-200">
-                <div>
-                  <span className="text-slate-400 block text-[10px]">Category</span>
+            <div className="space-y-3 text-xs">
+              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1.5">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Category:</span>
                   <span className="font-semibold text-slate-800">{previewRecord.category}</span>
                 </div>
-                <div>
-                  <span className="text-slate-400 block text-[10px]">Date Issued</span>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Date:</span>
                   <span className="font-semibold text-slate-800">{previewRecord.date}</span>
                 </div>
-                <div>
-                  <span className="text-slate-400 block text-[10px]">Issuer / Lab</span>
-                  <span className="font-semibold text-slate-800 truncate block">
-                    {previewRecord.hospitalOrLab}
-                  </span>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Hospital:</span>
+                  <span className="font-semibold text-slate-800">{previewRecord.hospitalOrLab}</span>
                 </div>
-                <div>
-                  <span className="text-slate-400 block text-[10px]">File Spec</span>
-                  <span className="font-mono text-slate-800">
-                    {previewRecord.fileName} ({previewRecord.fileSize})
-                  </span>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">File:</span>
+                  <span className="font-mono text-slate-800">{previewRecord.fileName} ({previewRecord.fileSize})</span>
                 </div>
               </div>
 
-              {/* Simulated Paper Report Layout */}
-              <div className="p-5 bg-white border border-slate-200 rounded-lg shadow-inner text-xs space-y-3 font-sans">
-                <div className="flex justify-between border-b border-slate-200 pb-2">
-                  <div>
-                    <span className="font-bold text-slate-900 block">{previewRecord.hospitalOrLab}</span>
-                    <span className="text-[10px] text-slate-500">
-                      National Accreditation Board for Testing Laboratories (NABL) Certified
-                    </span>
-                  </div>
-                  <span className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-mono border border-emerald-100">
-                    ABHA Verified
-                  </span>
+              {previewRecord.doctorNotes && (
+                <div className="p-3 bg-white border border-slate-200 rounded-lg">
+                  <span className="text-[10px] text-slate-400 uppercase font-semibold block mb-1">Clinical Remarks</span>
+                  <p className="text-slate-700 leading-relaxed">{previewRecord.doctorNotes}</p>
                 </div>
-
-                <div className="py-2 space-y-1.5">
-                  <div className="font-semibold text-slate-800">{previewRecord.name}</div>
-                  <p className="text-slate-600 leading-relaxed text-[11px]">
-                    {previewRecord.doctorNotes ||
-                      'Test results verified by clinical pathologist. Routine parameters within standard reference intervals.'}
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400">
-                  <span>Digitally Signed by Medical Officer</span>
-                  <span>SHA-256 Checksum: Verified</span>
-                </div>
-              </div>
+              )}
 
               <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
                 <button
                   onClick={() => setPreviewRecord(null)}
-                  className="px-3.5 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                  className="px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
                 >
-                  Close Preview
+                  Close
                 </button>
                 <button
-                  onClick={() => {
-                    alert(`Downloading verified copy of "${previewRecord.fileName}".`);
-                  }}
+                  onClick={() => setPreviewRecord(null)}
                   className="px-4 py-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Download File</span>
+                  <span>Download</span>
                 </button>
               </div>
             </div>
