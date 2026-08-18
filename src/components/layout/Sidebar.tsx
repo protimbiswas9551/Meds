@@ -49,6 +49,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       badge: 'Live',
     },
     {
+      id: 'health-locker' as HealthcareTab,
+      label: 'Digital Health Locker',
+      subtitle: 'Timeline & doctor QR share',
+      icon: FolderLock,
+      badge: 'QR Share',
+    },
+    {
       id: 'ai-triage' as HealthcareTab,
       label: 'AI Health Triage',
       subtitle: 'Bilingual symptom analyzer',
@@ -195,7 +202,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {currentSuite === 'healthcare' ? 'Health Modules' : 'Civic Modules'}
         </span>
         <span className="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full">
-          {currentSuite === 'healthcare' ? '7 Modules' : '6 Modules'}
+          {currentSuite === 'healthcare' ? '8 Modules' : '6 Modules'}
         </span>
       </div>
 

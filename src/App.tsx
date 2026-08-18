@@ -21,6 +21,7 @@ import { Sidebar } from './components/layout/Sidebar';
 
 // Healthcare suite views
 import { HealthcareOverview } from './components/healthcare/HealthcareOverview';
+import { DigitalHealthLocker } from './components/healthcare/DigitalHealthLocker';
 import { AiHealthTriage } from './components/healthcare/AiHealthTriage';
 import { JanAushadhiFinder } from './components/healthcare/JanAushadhiFinder';
 import { AbhaHealthCard } from './components/healthcare/AbhaHealthCard';
@@ -133,6 +134,7 @@ export default function App() {
                   onOpenAbha={handleOpenAbha}
                 />
               )}
+              {healthcareTab === 'health-locker' && <DigitalHealthLocker />}
               {healthcareTab === 'ai-triage' && <AiHealthTriage />}
               {healthcareTab === 'jan-aushadhi' && <JanAushadhiFinder />}
               {healthcareTab === 'abha' && <AbhaHealthCard />}

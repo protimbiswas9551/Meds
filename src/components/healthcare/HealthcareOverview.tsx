@@ -15,6 +15,7 @@ import {
   ExternalLink,
   ChevronRight,
   Sparkles,
+  FolderLock,
 } from 'lucide-react';
 import { HOSPITALS_DATA, MEDICINE_DATABASE, EMERGENCY_CONTACTS } from '../../data/mockData';
 import { HealthcareTab } from '../../types';
@@ -79,10 +80,17 @@ export const HealthcareOverview: React.FC<HealthcareOverviewProps> = ({
 
           <div className="flex flex-wrap gap-2.5">
             <button
-              onClick={() => onNavigateTab('ai-triage')}
+              onClick={() => onNavigateTab('health-locker')}
               className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg text-xs sm:text-sm transition-colors shadow-xs flex items-center gap-2 cursor-pointer"
             >
-              <Sparkles className="w-4 h-4" />
+              <FolderLock className="w-4 h-4" />
+              <span>Digital Health Locker</span>
+            </button>
+            <button
+              onClick={() => onNavigateTab('ai-triage')}
+              className="bg-white hover:bg-slate-50 text-slate-700 font-medium border border-slate-200 px-4 py-2 rounded-lg text-xs sm:text-sm transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
+            >
+              <Sparkles className="w-4 h-4 text-indigo-600" />
               <span>AI Health Triage</span>
             </button>
             <button
@@ -139,6 +147,69 @@ export const HealthcareOverview: React.FC<HealthcareOverviewProps> = ({
           </div>
           <div className="text-2xl font-bold text-slate-900">₹5 Lakh/Yr</div>
           <p className="text-[11px] text-emerald-700 font-medium mt-1">Cashless family coverage</p>
+        </div>
+      </div>
+
+      {/* Quick Launch Cards for New Health Modules */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Digital Health Locker Quick Launcher */}
+        <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-indigo-200 transition-colors">
+          <div>
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="flex items-center gap-2">
+                <div className="p-2 bg-indigo-50 rounded-lg text-indigo-700 border border-indigo-100">
+                  <FolderLock className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-xs font-bold text-slate-900 block">Digital Health Locker</span>
+                  <span className="text-[10px] text-slate-500">ABDM Linked & QR Share</span>
+                </div>
+              </div>
+              <span className="text-[10px] font-semibold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-100">
+                New
+              </span>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              Upload and store blood tests, prescriptions, and discharge summaries in a chronological timeline. Generate 15-minute temporary QR codes for doctor consultations.
+            </p>
+          </div>
+          <button
+            onClick={() => onNavigateTab('health-locker')}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-3 rounded-lg text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+          >
+            <span>Open Digital Health Locker</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* AI Health Triage Quick Launcher */}
+        <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-indigo-200 transition-colors">
+          <div>
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="flex items-center gap-2">
+                <div className="p-2 bg-indigo-50 rounded-lg text-indigo-700 border border-indigo-100">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-xs font-bold text-slate-900 block">AI Health Triage</span>
+                  <span className="text-[10px] text-slate-500">Bilingual (Hindi / English)</span>
+                </div>
+              </div>
+              <span className="text-[10px] font-semibold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-100">
+                AI Powered
+              </span>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              Type your symptoms, age, and severity to get immediate preliminary guidance, triage urgency categorization, and home measures before consulting a doctor.
+            </p>
+          </div>
+          <button
+            onClick={() => onNavigateTab('ai-triage')}
+            className="w-full bg-white hover:bg-slate-50 text-slate-800 font-medium py-2 px-3 rounded-lg text-xs transition-colors border border-slate-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+          >
+            <span>Start Symptom Triage</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
         </div>
       </div>
 

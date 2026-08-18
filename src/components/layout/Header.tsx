@@ -76,6 +76,7 @@ export const Header: React.FC<HeaderProps> = ({
   ];
 
   const quickSearchItems = [
+    { name: 'Digital Health Locker (Blood Reports, Prescriptions, QR Share)', suite: 'healthcare' as SuiteType, tab: 'health-locker', category: 'Health' },
     { name: 'AI Health Triage & Symptom Checker (Hindi / English)', suite: 'healthcare' as SuiteType, tab: 'ai-triage', category: 'Health' },
     { name: 'Jan Aushadhi Generic Medicine Comparison', suite: 'healthcare' as SuiteType, tab: 'jan-aushadhi', category: 'Health' },
     { name: 'Ayushman Bharat Health Account (ABHA) Card', suite: 'healthcare' as SuiteType, tab: 'abha', category: 'Health' },

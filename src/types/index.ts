@@ -2,12 +2,26 @@ export type SuiteType = 'healthcare' | 'civic';
 
 export type HealthcareTab =
   | 'overview'
+  | 'health-locker'
   | 'ai-triage'
   | 'abha'
   | 'jan-aushadhi'
   | 'opd-token'
   | 'blood-bank'
   | 'immunization';
+
+export interface HealthLockerRecord {
+  id: string;
+  name: string;
+  category: 'Lab Report' | 'Prescription' | 'Discharge Summary' | 'Vaccine Certificate' | 'Scan & X-Ray' | 'Other';
+  date: string;
+  hospitalOrLab: string;
+  fileName: string;
+  fileSize: string;
+  fileType: 'pdf' | 'image' | 'doc';
+  doctorNotes?: string;
+  isAbdmLinked: boolean;
+}
 
 export type CivicTab =
   | 'overview'
