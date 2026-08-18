@@ -1,0 +1,6 @@
+{
+  "name": "JanSetu - Indian Civic & Health Suite",
+  "description": "A comprehensive Indian Public Utility Super-App featuring Healthcare (ABHA, Jan Aushadhi Generic Medicines, e-Sanjeevani OPD, Blood Banks) and Civic Services (Grievance Redressal, Govt Scheme Eligibility, RTI Assistant).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
