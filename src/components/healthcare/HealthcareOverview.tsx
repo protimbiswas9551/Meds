@@ -79,10 +79,17 @@ export const HealthcareOverview: React.FC<HealthcareOverviewProps> = ({
 
           <div className="flex flex-wrap gap-2.5">
             <button
-              onClick={() => onNavigateTab('jan-aushadhi')}
+              onClick={() => onNavigateTab('ai-triage')}
               className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg text-xs sm:text-sm transition-colors shadow-xs flex items-center gap-2 cursor-pointer"
             >
-              <Pill className="w-4 h-4" />
+              <Sparkles className="w-4 h-4" />
+              <span>AI Health Triage</span>
+            </button>
+            <button
+              onClick={() => onNavigateTab('jan-aushadhi')}
+              className="bg-white hover:bg-slate-50 text-slate-700 font-medium border border-slate-200 px-4 py-2 rounded-lg text-xs sm:text-sm transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
+            >
+              <Pill className="w-4 h-4 text-indigo-600" />
               <span>Generic Medicine Price Finder</span>
             </button>
             <button

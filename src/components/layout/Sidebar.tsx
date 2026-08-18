@@ -49,6 +49,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       badge: 'Live',
     },
     {
+      id: 'ai-triage' as HealthcareTab,
+      label: 'AI Health Triage',
+      subtitle: 'Bilingual symptom analyzer',
+      icon: Sparkles,
+      badge: 'AI Guide',
+    },
+    {
       id: 'jan-aushadhi' as HealthcareTab,
       label: 'Jan Aushadhi Generics',
       subtitle: 'Compare & save up to 85%',
@@ -188,7 +195,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {currentSuite === 'healthcare' ? 'Health Modules' : 'Civic Modules'}
         </span>
         <span className="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full">
-          6 Modules
+          {currentSuite === 'healthcare' ? '7 Modules' : '6 Modules'}
         </span>
       </div>
 

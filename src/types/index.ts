@@ -2,6 +2,7 @@ export type SuiteType = 'healthcare' | 'civic';
 
 export type HealthcareTab =
   | 'overview'
+  | 'ai-triage'
   | 'abha'
   | 'jan-aushadhi'
   | 'opd-token'
