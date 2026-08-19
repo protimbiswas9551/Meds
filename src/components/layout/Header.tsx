@@ -10,6 +10,7 @@ import {
   Sparkles,
   HeartPulse,
   Landmark,
+  CreditCard,
 } from 'lucide-react';
 import { EMERGENCY_CONTACTS } from '../../data/mockData';
 import { SuiteType } from '../../types';
@@ -54,24 +55,24 @@ export const Header: React.FC<HeaderProps> = ({
   const notifications = [
     {
       id: 'n1',
-      title: 'Grievance Updated: GRV-2025-0842',
-      time: '15m ago',
-      desc: 'Repair vehicle dispatched with cold emulsion patch materials for Ring Road Pothole.',
-      type: 'civic',
+      title: 'National Health Advisory',
+      time: 'Today',
+      desc: 'Free health screening camps active across primary health centres under Ayushman Bharat.',
+      type: 'health',
     },
     {
       id: 'n2',
-      title: 'OPD Queue Alert: Token #142',
-      time: '1h ago',
-      desc: 'Your estimated consultation slot starts in 18 minutes at AIIMS Cardiology.',
+      title: 'Jan Aushadhi Generic Medicine Update',
+      time: 'Yesterday',
+      desc: 'Over 1,900 generic formulations available at PMBJP Kendras with up to 90% savings.',
       type: 'health',
     },
     {
       id: 'n3',
-      title: 'New Generic Medicine Batch Added',
-      time: 'Yesterday',
-      desc: 'Jan Aushadhi Kendra received 400+ units of Metformin and Atorvastatin.',
-      type: 'health',
+      title: 'Public Civic Portal Active',
+      time: '2d ago',
+      desc: 'Citizens can file municipal grievances and check central/state scheme eligibility directly.',
+      type: 'civic',
     },
   ];
 
@@ -265,16 +266,14 @@ export const Header: React.FC<HeaderProps> = ({
                 )}
               </div>
 
-              {/* ABHA Profile Pill */}
+              {/* ABHA Card Button */}
               <button
                 onClick={onOpenAbhaModal}
                 className="flex items-center gap-1.5 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 text-indigo-700 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
-                title="View ABHA Health Account"
+                title="Ayushman Bharat Health Account"
               >
-                <div className="w-4 h-4 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[9px] font-bold">
-                  ✓
-                </div>
-                <span className="hidden md:inline">ABHA Active</span>
+                <CreditCard className="w-3.5 h-3.5 text-indigo-600" />
+                <span className="hidden md:inline">ABHA Card</span>
               </button>
             </div>
           </div>
