@@ -192,8 +192,13 @@ export const DigitalHealthLocker: React.FC = () => {
     }, 400);
   };
 
-  const handleDelete = (id: string) => {
-    setRecords(records.filter((r) => r.id !== id));
+  const handleDelete = (id: string, name?: string) => {
+    setRecords((prev) => prev.filter((r) => r.id !== id));
+    if (previewRecord?.id === id) {
+      setPreviewRecord(null);
+    }
+    setToastMessage(name ? `"${name}" removed from locker.` : 'Document removed from locker.');
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
   const handleCopyLink = () => {
@@ -491,8 +496,45 @@ export const DigitalHealthLocker: React.FC = () => {
             </div>
 
             {filteredRecords.length === 0 ? (
-              <div className="py-8 text-center text-slate-400 text-xs">
-                No documents found. Use the form on the left to add your records.
+              <div className="py-8 text-center text-slate-500 text-xs space-y-2">
+                <p>No documents found matching your filter.</p>
+                {records.length === 0 && (
+                  <button
+                    onClick={() => {
+                      setRecords([
+                        {
+                          id: 'hl-001',
+                          name: 'Blood Test Report (Lipid Profile & CBC)',
+                          category: 'Lab Report',
+                          date: '2025-05-14',
+                          hospitalOrLab: 'Dr. Lal PathLabs & Civil Hospital',
+                          fileName: 'Blood_Test_Lipid_CBC.pdf',
+                          fileSize: '1.8 MB',
+                          fileType: 'pdf',
+                          doctorNotes: 'Fasting glucose: 94 mg/dL, Total cholesterol: 182 mg/dL. Normal limits.',
+                          isAbdmLinked: true,
+                        },
+                        {
+                          id: 'hl-002',
+                          name: 'Cardiology ECG & Holter Summary',
+                          category: 'Scan & X-Ray',
+                          date: '2025-04-20',
+                          hospitalOrLab: 'AIIMS New Delhi - Cardiology',
+                          fileName: 'AIIMS_Cardio_ECG.pdf',
+                          fileSize: '3.4 MB',
+                          fileType: 'pdf',
+                          doctorNotes: 'Normal sinus rhythm, HR 72 bpm. No ST-T segment deviation.',
+                          isAbdmLinked: true,
+                        },
+                      ]);
+                      setToastMessage('Sample documents restored');
+                      setTimeout(() => setToastMessage(null), 3000);
+                    }}
+                    className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 underline cursor-pointer"
+                  >
+                    Restore sample documents
+                  </button>
+                )}
               </div>
             ) : (
               <div className="relative pl-6 space-y-4 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-slate-200">
@@ -538,20 +580,21 @@ export const DigitalHealthLocker: React.FC = () => {
                         </div>
 
                         {/* Actions */}
-                        <div className="flex items-center gap-1 shrink-0 pt-2 sm:pt-0">
+                        <div className="flex items-center gap-1.5 shrink-0 pt-2 sm:pt-0">
                           <button
                             onClick={() => setPreviewRecord(record)}
-                            className="px-2.5 py-1 text-slate-600 hover:text-indigo-600 bg-white hover:bg-slate-100 border border-slate-200 rounded text-xs font-medium transition-colors flex items-center gap-1 cursor-pointer"
+                            className="px-2.5 py-1 text-slate-700 hover:text-indigo-600 bg-white hover:bg-slate-50 border border-slate-200 rounded-md text-xs font-medium transition-colors flex items-center gap-1 cursor-pointer shadow-xs"
                           >
                             <Eye className="w-3.5 h-3.5" />
                             <span>View</span>
                           </button>
                           <button
-                            onClick={() => handleDelete(record.id)}
-                            className="p-1.5 text-slate-400 hover:text-rose-600 bg-white hover:bg-rose-50 border border-slate-200 rounded text-xs transition-colors cursor-pointer"
-                            title="Delete"
+                            onClick={() => handleDelete(record.id, record.name)}
+                            className="px-2.5 py-1 text-rose-600 hover:text-rose-700 bg-white hover:bg-rose-50 border border-rose-200 hover:border-rose-300 rounded-md text-xs font-medium transition-colors flex items-center gap-1 cursor-pointer shadow-xs"
+                            title={`Remove "${record.name}" from timeline`}
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                            <span>Delete</span>
                           </button>
                         </div>
                       </div>
@@ -705,20 +748,29 @@ export const DigitalHealthLocker: React.FC = () => {
                 </div>
               )}
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+              <div className="flex items-center justify-between gap-2 pt-3 border-t border-slate-100">
                 <button
-                  onClick={() => setPreviewRecord(null)}
-                  className="px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                  onClick={() => handleDelete(previewRecord.id, previewRecord.name)}
+                  className="px-3 py-1.5 text-xs font-medium text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
-                  Close
+                  <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                  <span>Delete Document</span>
                 </button>
-                <button
-                  onClick={() => setPreviewRecord(null)}
-                  className="px-4 py-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setPreviewRecord(null)}
+                    className="px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                  >
+                    Close
+                  </button>
+                  <button
+                    onClick={() => setPreviewRecord(null)}
+                    className="px-4 py-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
