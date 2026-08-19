@@ -68,16 +68,25 @@ export interface JanAushadhiStore {
 
 export interface HospitalRecord {
   id: string;
+  hfrId: string; // National Health Facility Registry (HFR) ID
   name: string;
-  type: 'AIIMS' | 'Government Hospital' | 'Civil Hospital' | 'ESI Hospital' | 'Primary Health Centre';
+  type: 'AIIMS' | 'Government Hospital' | 'Civil Hospital' | 'ESI Hospital' | 'Primary Health Centre' | 'Autonomous Medical College' | 'District Hospital';
   city: string;
   state: string;
+  address: string;
+  pincode: string;
   generalBeds: { available: number; total: number };
   icuBeds: { available: number; total: number };
   oxygenBeds: { available: number; total: number };
+  ventilatorBeds: { available: number; total: number };
   emergencyContact: string;
+  helplinePhone?: string;
   ayushmanEmpanelled: boolean;
+  pmjayId: string;
   distance: string;
+  lastUpdated: string;
+  officialWebsite?: string;
+  eHospitalCode?: string;
 }
 
 export interface BloodStockRecord {
