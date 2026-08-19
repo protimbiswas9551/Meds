@@ -23,11 +23,7 @@ export const JanAushadhiFinder: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [storeCityFilter, setStoreCityFilter] = useState<string>('All');
-  const [prescriptionBasket, setPrescriptionBasket] = useState<MedicineComparison[]>([
-    MEDICINE_DATABASE[1], // Metformin
-    MEDICINE_DATABASE[2], // Atorvastatin
-    MEDICINE_DATABASE[3], // Telmisartan
-  ]);
+  const [prescriptionBasket, setPrescriptionBasket] = useState<MedicineComparison[]>([]);
   const [copiedStore, setCopiedStore] = useState<string | null>(null);
 
   const categories = [

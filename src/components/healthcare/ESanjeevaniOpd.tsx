@@ -14,6 +14,7 @@ import {
   Printer,
   ChevronRight,
   Trash2,
+  ExternalLink,
 } from 'lucide-react';
 import { OpdToken } from '../../types';
 
@@ -22,7 +23,7 @@ export const ESanjeevaniOpd: React.FC = () => {
   const [tokens, setTokens] = useState<OpdToken[]>([]);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [patientName, setPatientName] = useState('');
-  const [patientAge, setPatientAge] = useState('28');
+  const [patientAge, setPatientAge] = useState('');
   const [patientGender, setPatientGender] = useState('Female');
   const [department, setDepartment] = useState('General Medicine');
   const [isTeleConsult, setIsTeleConsult] = useState(true);
@@ -106,13 +107,24 @@ export const ESanjeevaniOpd: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => setShowBookingModal(true)}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-xs transition-colors flex items-center gap-2 cursor-pointer self-start md:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Book Free Consultation</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <a
+            href="https://esanjeevani.mohfw.gov.in"
+            target="_blank"
+            rel="noreferrer"
+            className="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-200"
+          >
+            <span>Official e-Sanjeevani</span>
+            <ExternalLink className="w-3.5 h-3.5 text-slate-600" />
+          </a>
+          <button
+            onClick={() => setShowBookingModal(true)}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-xs transition-colors flex items-center gap-2 cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Book Free Consultation</span>
+          </button>
+        </div>
       </div>
 
       {/* Active Tokens List */}

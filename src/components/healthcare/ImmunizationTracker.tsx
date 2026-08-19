@@ -15,12 +15,8 @@ import {
 import { VACCINE_SCHEDULE } from '../../data/mockData';
 
 export const ImmunizationTracker: React.FC = () => {
-  const [childDob, setChildDob] = useState('2024-06-15');
-  const [checkedVaccines, setCheckedVaccines] = useState<Record<string, boolean>>({
-    'vac-1': true,
-    'vac-2': true,
-    'vac-3': true,
-  });
+  const [childDob, setChildDob] = useState('');
+  const [checkedVaccines, setCheckedVaccines] = useState<Record<string, boolean>>({});
 
   const toggleVaccine = (id: string) => {
     setCheckedVaccines({
