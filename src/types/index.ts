@@ -75,6 +75,9 @@ export interface HospitalRecord {
   state: string;
   address: string;
   pincode: string;
+  lat?: number;
+  lng?: number;
+  calculatedDistanceKm?: number;
   generalBeds: { available: number; total: number };
   icuBeds: { available: number; total: number };
   oxygenBeds: { available: number; total: number };
@@ -94,6 +97,11 @@ export interface BloodStockRecord {
   hospitalName: string;
   city: string;
   state: string;
+  address?: string;
+  pincode?: string;
+  lat?: number;
+  lng?: number;
+  calculatedDistanceKm?: number;
   type: 'Govt Red Cross' | 'District Hospital' | 'Govt Medical College';
   contact: string;
   lastUpdated: string;

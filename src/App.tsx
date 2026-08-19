@@ -139,7 +139,7 @@ export default function App() {
               {healthcareTab === 'jan-aushadhi' && <JanAushadhiFinder />}
               {healthcareTab === 'abha' && <AbhaHealthCard />}
               {healthcareTab === 'opd-token' && <ESanjeevaniOpd />}
-              {healthcareTab === 'blood-bank' && <BloodBankNetwork />}
+              {healthcareTab === 'blood-bank' && <BloodBankNetwork selectedCity={selectedCity} />}
               {healthcareTab === 'immunization' && <ImmunizationTracker />}
             </div>
           )}
