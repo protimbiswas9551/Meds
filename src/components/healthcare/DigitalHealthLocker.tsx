@@ -23,8 +23,25 @@ import {
 import { HealthLockerRecord } from '../../types';
 
 export const DigitalHealthLocker: React.FC = () => {
-  // Starts clean and empty — only user-uploaded documents will appear
-  const [records, setRecords] = useState<HealthLockerRecord[]>([]);
+  // Starts loaded from storage or clean
+  const [records, setRecords] = useState<HealthLockerRecord[]>(() => {
+    try {
+      const saved = localStorage.getItem('jansetu_health_locker_docs');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return [];
+  });
+
+  // Save to storage whenever records change
+  useEffect(() => {
+    try {
+      localStorage.setItem('jansetu_health_locker_docs', JSON.stringify(records));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [records]);
 
   // Form states — default empty
   const [docName, setDocName] = useState('');

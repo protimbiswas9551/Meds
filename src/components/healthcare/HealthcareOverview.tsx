@@ -24,6 +24,7 @@ import {
 import { HospitalRecord, HealthcareTab } from '../../types';
 import { fetchLiveHospitalData } from '../../services/hospitalBedApi';
 import { formatDistance, getProximityTag } from '../../utils/geoUtils';
+import { HealthMetricsVisualizer } from './HealthMetricsVisualizer';
 
 interface HealthcareOverviewProps {
   selectedCity: string;
@@ -194,6 +195,9 @@ export const HealthcareOverview: React.FC<HealthcareOverviewProps> = ({
           </a>
         </div>
       </div>
+
+      {/* Dynamic Health Metrics & Module Activity Summary */}
+      <HealthMetricsVisualizer onNavigateTab={onNavigateTab} onOpenAbha={onOpenAbha} />
 
       {/* Live Hospital Bed Tracker */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">

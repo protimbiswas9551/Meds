@@ -23,6 +23,20 @@ export interface HealthLockerRecord {
   isAbdmLinked: boolean;
 }
 
+export interface HealthVitalRecord {
+  id: string;
+  date: string;
+  time: string;
+  systolicBp?: number;
+  diastolicBp?: number;
+  bloodGlucose?: number;
+  glucoseType?: 'Fasting' | 'Post-Meal' | 'Random';
+  heartRate?: number;
+  spO2?: number;
+  weightKg?: number;
+  notes?: string;
+}
+
 export type CivicTab =
   | 'overview'
   | 'grievance'

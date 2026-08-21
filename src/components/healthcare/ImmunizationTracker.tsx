@@ -16,12 +16,29 @@ import { VACCINE_SCHEDULE } from '../../data/mockData';
 
 export const ImmunizationTracker: React.FC = () => {
   const [childDob, setChildDob] = useState('');
-  const [checkedVaccines, setCheckedVaccines] = useState<Record<string, boolean>>({});
+  const [checkedVaccines, setCheckedVaccines] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem('jansetu_immunization_checked');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    // Default initial checked set for birth/6wk
+    return { 'vac-1': true, 'vac-2': true };
+  });
 
   const toggleVaccine = (id: string) => {
-    setCheckedVaccines({
-      ...checkedVaccines,
-      [id]: !checkedVaccines[id],
+    setCheckedVaccines((prev) => {
+      const updated = {
+        ...prev,
+        [id]: !prev[id],
+      };
+      try {
+        localStorage.setItem('jansetu_immunization_checked', JSON.stringify(updated));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
     });
   };
 
